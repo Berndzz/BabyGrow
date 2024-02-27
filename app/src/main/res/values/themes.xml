@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.MySplash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">#DFDEDE</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/babygrow</item>
+
+        <item name="postSplashScreenTheme">@style/Theme.BabyGrow</item>
+    </style>
+
+    <style name="Theme.BabyGrow" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "27795468542",
+    "project_id": "babygrow-67e64",
+    "storage_bucket": "babygrow-67e64.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:27795468542:android:a261fb72015fbc125535af",
+        "android_client_info": {
+          "package_name": "com.hardus.babygrow"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBeMZnGQH29QSncdcDyt-c-yBf53yctPgQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
