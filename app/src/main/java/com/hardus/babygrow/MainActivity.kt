@@ -3,49 +3,43 @@ package com.hardus.babygrow
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
+import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.auth.api.identity.Identity
+import com.hardus.babygrow.auth.presentation.sign_in.GoogleAuthUiClient
+import com.hardus.babygrow.navigation.AUTH_GRAPH_ROUTE
+import com.hardus.babygrow.navigation.BabyGrowNavHost
+import com.hardus.babygrow.navigation.ROOT_GRAPH_ROUTE
+import com.hardus.babygrow.navigation.Screens
 import com.hardus.babygrow.ui.theme.BabyGrowTheme
 
 class MainActivity : ComponentActivity() {
+
+    private val googleAuthUiClient by lazy {
+        GoogleAuthUiClient(
+            context = applicationContext,
+            oneTapClient = Identity.getSignInClient(applicationContext)
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+
         setContent {
             BabyGrowTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Bernard")
-                    Greeting("Art")
-                }
+                val navController = rememberNavController()
+                BabyGrowNavHost(
+                    navController,
+                    googleAuthUiClient,
+                    this,
+                    startDestination = AUTH_GRAPH_ROUTE
+                )
             }
         }
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    BabyGrowTheme {
-        Greeting("Android")
-    }
 }
