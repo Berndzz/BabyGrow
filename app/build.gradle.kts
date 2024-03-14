@@ -85,4 +85,14 @@ dependencies {
     //status bar with acompanist
     implementation ("com.google.accompanist:accompanist-insets:0.23.0")
 
+    //youtube player
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")
+    implementation( "com.pierfrancescosoffritti.androidyoutubeplayer:chromecast-sender:0.28")
+    implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:custom-ui:12.0.0")
+
+    //Exo
+    implementation ("androidx.media3:media3-exoplayer:1.2.1")
+    implementation ("androidx.media3:media3-ui:1.2.1")
+    implementation ("androidx.media3:media3-common:1.2.1")
+
 }

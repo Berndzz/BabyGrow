@@ -40,6 +40,8 @@ import androidx.navigation.compose.rememberNavController
 import com.hardus.babygrow.R
 import com.hardus.babygrow.auth.presentation.sign_in.GoogleAuthUiClient
 import com.hardus.babygrow.main_content.home.HomeScreen
+import com.hardus.babygrow.main_content.home.detail.DetailScreen
+import com.hardus.babygrow.main_content.home.detail.ListVideoScreen
 import com.hardus.babygrow.main_content.profile.ProfileScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -90,6 +92,22 @@ fun AppScreen(
                             navController.popBackStack()
                         }
                     })
+            }
+            composable("detail/{simulasiId}") { backStackEntry ->
+                val simulasiId = backStackEntry.arguments?.getString("simulasiId")?.toLongOrNull()
+                if (simulasiId != null) {
+                    DetailScreen(navController = navController, simulasiId = simulasiId)
+                } else {
+                    Text(text = "Error : ID Simulasi Tidak Valid")
+                }
+            }
+            composable("videoList/{simulasiId}") { backStackEntry ->
+                val simulasiId = backStackEntry.arguments?.getString("simulasiId")?.toLongOrNull()
+                if (simulasiId != null) {
+                    ListVideoScreen(navController = navController, simulasiId = simulasiId)
+                } else {
+                    Text(text = "Error : ID Simulasi Tidak Valid")
+                }
             }
         }
     }
