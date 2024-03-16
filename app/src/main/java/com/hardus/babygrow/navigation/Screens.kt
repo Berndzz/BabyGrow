@@ -33,6 +33,8 @@ sealed class Screens(
         unselectedIcon = Icons.Outlined.Person
     )
 
-    object SignIn : Screens("sign_in")
+    object LaporanBayi : Screens(route = "laporan_bayi")
+
+    object SignIn : Screens(route = "sign_in")
 
 }

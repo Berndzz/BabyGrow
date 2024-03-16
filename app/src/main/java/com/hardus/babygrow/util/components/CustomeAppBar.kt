@@ -21,6 +21,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -74,9 +75,11 @@ fun CustomAppBar(
 @Composable
 fun CustomDetailTopAppBar(
     navController: NavController,
-    title: String
+    title: String,
+    modifier: Modifier = Modifier
 ) {
     CenterAlignedTopAppBar(
+        modifier = modifier,
         navigationIcon = {
             IconButton(onClick = { navController.navigateUp() }) {
                 Icon(
@@ -87,7 +90,9 @@ fun CustomDetailTopAppBar(
         },
         title = {
             Text(
-                text = title, fontWeight = FontWeight.Bold, maxLines = 1,
+                text = title, fontWeight = FontWeight.Bold,
+                maxLines = 2,
+                textAlign = TextAlign.Center,
                 overflow = TextOverflow.Ellipsis
             )
         },
