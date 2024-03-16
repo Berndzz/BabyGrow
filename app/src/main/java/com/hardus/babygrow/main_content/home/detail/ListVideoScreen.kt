@@ -1,6 +1,5 @@
 package com.hardus.babygrow.main_content.home.detail
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -25,10 +24,9 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
 import com.hardus.babygrow.util.components.CustomDetailTopAppBar
-import com.hardus.babygrow.util.components.SubSimulasi
+import com.hardus.babygrow.util.data.SubSimulasi
 import com.hardus.babygrow.util.components.simulasiList
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.customui.DefaultPlayerUiController
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
@@ -68,7 +66,6 @@ fun VideoListItem(subSimulasi: SubSimulasi) {
     Column(
         modifier = Modifier
             .padding(8.dp)
-            .clickable { /* Handle item click */ }
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             YouTubePlayer(

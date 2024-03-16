@@ -1,10 +1,18 @@
-package com.hardus.babygrow.util.components
+package com.hardus.babygrow.util.data
 
 data class Simulasi(
     val id_simulasi: Long = 0L,
     val judul_simulasi: String = "",
     val deskripsi_simulasi: String = "",
-    val gambar_simulasi: String = ""
+    val gambar_simulasi: String = "",
+    val manfaat_simulasi:String? = null,
+    val tips_simulasi:String? = null,
+    val kebutuhan_simulasi:String? = null,
+    val cara_simulasi:String? = null,
+    val jenis_simulasi:String? = null,
+    val halHal_simulasi:String? = null,
+    val teknik_simulasi:String? = null,
+    val catatan_simulasi:String? = null,
 )
 
 data class SubSimulasi(

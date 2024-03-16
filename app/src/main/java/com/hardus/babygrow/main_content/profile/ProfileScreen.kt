@@ -1,6 +1,7 @@
 package com.hardus.babygrow.main_content.profile
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -128,14 +129,14 @@ fun CardProfile(
                 SettingComponents(
                     iconEnd = Icons.Default.ArrowForwardIos,
                     text = "Tenting Aplikasi",
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.background,
                     onNavigate = {}
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 SettingComponents(
                     iconEnd = Icons.Default.ArrowForwardIos,
                     text = "Sign In out",
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.background,
                     onNavigate = onSignOut
                 )
             }
@@ -158,9 +159,9 @@ fun SettingComponents(
             .fillMaxWidth()
             .height(65.dp)
             .padding(start = 5.dp, end = 5.dp)
+            .border(2.dp, Color.White)
             .background(
                 color = color,
-                shape = RoundedCornerShape(5.dp)
             )
             .clickable { onNavigate() }
     ) {

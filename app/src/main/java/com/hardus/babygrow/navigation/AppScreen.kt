@@ -42,6 +42,7 @@ import com.hardus.babygrow.auth.presentation.sign_in.GoogleAuthUiClient
 import com.hardus.babygrow.main_content.home.HomeScreen
 import com.hardus.babygrow.main_content.home.detail.DetailScreen
 import com.hardus.babygrow.main_content.home.detail.ListVideoScreen
+import com.hardus.babygrow.main_content.home.laporanBayi.FormLaporanBayiScreen
 import com.hardus.babygrow.main_content.profile.ProfileScreen
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -77,7 +78,10 @@ fun AppScreen(
                 HomeScreen(
                     drawerState = drawerState,
                     navController = navController,
-                    userData = googleAuthUiClient.getSignedInUser()
+                    userData = googleAuthUiClient.getSignedInUser(),
+                    onLaporanBayi = {
+                        navController.navigate(route = Screens.LaporanBayi.route)
+                    }
                 )
             }
             composable(Screens.Profile.route) {
@@ -91,7 +95,17 @@ fun AppScreen(
                             ).show()
                             navController.popBackStack()
                         }
-                    })
+                    }
+                )
+            }
+            composable(Screens.LaporanBayi.route) {
+                FormLaporanBayiScreen(
+                    navController = navController,
+                    onHome = {
+                        navController.popBackStack()
+                        navController.navigate(route = Screens.Home.route)
+                    }
+                )
             }
             composable("detail/{simulasiId}") { backStackEntry ->
                 val simulasiId = backStackEntry.arguments?.getString("simulasiId")?.toLongOrNull()
