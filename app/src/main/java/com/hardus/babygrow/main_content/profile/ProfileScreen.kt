@@ -14,14 +14,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForwardIos
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ElevatedCard
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -48,12 +46,14 @@ import com.hardus.babygrow.util.components.CustomAppBar
 fun ProfileScreen(
     drawerState: DrawerState,
     userData: UserData?,
-    onSignOut: () -> Unit
+    onSignOut: () -> Unit,
+    onAboutApp: () -> Unit
 ) {
     CardProfile(
         drawerState,
         userData,
-        onSignOut
+        onSignOut,
+        onAboutApp
     )
 }
 
@@ -62,11 +62,17 @@ fun ProfileScreen(
 fun CardProfile(
     drawerState: DrawerState,
     userData: UserData?,
-    onSignOut: () -> Unit
+    onSignOut: () -> Unit,
+    onAboutApp: () -> Unit
 ) {
     Scaffold(
         topBar = {
-            CustomAppBar(drawerState = drawerState, title = "Profile", userData = userData,  isHomeScreen = false)
+            CustomAppBar(
+                drawerState = drawerState,
+                title = "Profile",
+                userData = userData,
+                isHomeScreen = false
+            )
         },
         content = { paddingValues ->
             Column(
@@ -130,7 +136,7 @@ fun CardProfile(
                     iconEnd = Icons.Default.ArrowForwardIos,
                     text = "Tenting Aplikasi",
                     color = MaterialTheme.colorScheme.background,
-                    onNavigate = {}
+                    onNavigate = onAboutApp
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 SettingComponents(

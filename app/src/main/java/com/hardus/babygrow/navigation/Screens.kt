@@ -37,4 +37,7 @@ sealed class Screens(
 
     object SignIn : Screens(route = "sign_in")
 
+    object AboutApp: Screens(route = "about")
+    object InformationUser: Screens(route = "info_user")
+
 }

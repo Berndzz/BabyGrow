@@ -5,4 +5,9 @@
     <string name="name_baby">Nama bayi Anda</string>
     <string name="berat_badan">Berat badan bayi anda saat ini</string>
     <string name="simpan">Simpan</string>
+    <string name="slide_1">Teman setia ibu dalam mengasuh bayi dengan fitur lengkap.</string>
+    <string name="slide_2">Desain intuitif untuk pengalaman pengguna yang nyaman.</string>
+    <string name="slide_3">Praktis dan informatif untuk memantau dan mendukung pertumbuhan bayi.</string>
+    <string name="tentang_aplikasi">Baby Grow merupakan aplikasi yang dirancang khusus untuk mendukung orang tua, khususnya ibu, dalam mengasuh bayi mereka. Aplikasi ini menggabungkan fitur pembelajaran, pencatatan, dan pemantauan, dengan fokus utama pada kemudahan penggunaan dan manfaat yang dirasakan pengguna. Dikembangkan berdasarkan Metode TAM dan UTAUT, Baby Grow menawarkan antarmuka yang sederhana dan intuitif, memudahkan para orang tua dalam memantau perkembangan bayi seperti berat badan dan menyediakan materi edukasi. Dengan fitur-fitur seperti Form Laporan Bayi, Simulasi bagi Bayi, dan Video Edukasi, aplikasi ini berfungsi sebagai alat bantu yang praktis dan informatif, cocok untuk kebutuhan pengasuhan bayi masa kini.</string>
+    <string name="build_by"> © Bernard Tukan</string>
 </resources>

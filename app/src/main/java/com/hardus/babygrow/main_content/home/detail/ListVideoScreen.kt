@@ -13,6 +13,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.LifecycleOwner
 import androidx.navigation.NavController
+import com.hardus.babygrow.main_content.home.presentation.HomeViewModel
 import com.hardus.babygrow.util.components.CustomDetailTopAppBar
 import com.hardus.babygrow.util.data.SubSimulasi
-import com.hardus.babygrow.util.components.simulasiList
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.customui.DefaultPlayerUiController
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -33,8 +35,12 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 
 @Composable
 fun ListVideoScreen(
-    navController: NavController, simulasiId: Long
+    navController: NavController,
+    simulasiId: Long,
+    viewModel: HomeViewModel
 ) {
+    val simulasiList by viewModel.simulasiList.collectAsState() // Mengambil StateFlow simulasiList
+
     val simulasi = simulasiList.find { it.simulasi.id_simulasi == simulasiId }
     if (simulasi != null) {
         Scaffold(

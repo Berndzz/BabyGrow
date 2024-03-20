@@ -84,6 +84,7 @@ dependencies {
 
     //status bar with acompanist
     implementation ("com.google.accompanist:accompanist-insets:0.23.0")
+    implementation ("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
 
     //youtube player
     implementation ("com.pierfrancescosoffritti.androidyoutubeplayer:core:12.1.0")

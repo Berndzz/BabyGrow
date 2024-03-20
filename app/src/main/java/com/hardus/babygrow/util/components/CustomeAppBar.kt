@@ -1,6 +1,8 @@
 package com.hardus.babygrow.util.components
 
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
@@ -62,6 +64,7 @@ fun CustomAppBar(
                         .border(2.dp, Color.White, CircleShape),
                     contentScale = ContentScale.Crop
                 )
+                Spacer(modifier = Modifier.padding(end = 5.dp))
             }
         },
         title = { Text(text = title, fontWeight = FontWeight.Bold, color = Color.White) },
