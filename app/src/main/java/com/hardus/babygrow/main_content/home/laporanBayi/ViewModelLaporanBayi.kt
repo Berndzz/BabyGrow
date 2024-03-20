@@ -9,8 +9,11 @@ import com.hardus.babygrow.util.objects.FirestoreAuth
 import com.hardus.babygrow.util.objects.FirestoreService
 import com.hardus.babygrow.util.objects.toTimestamp
 import java.time.LocalDate
+import java.time.ZoneId
 
 class ViewModelLaporanBayi : ViewModel() {
+    private val firestore = FirestoreService.db
+
     private val _bayi = mutableStateOf<Bayi?>(null)
     val personalData: State<Bayi?> = _bayi
 
@@ -73,7 +76,6 @@ class ViewModelLaporanBayi : ViewModel() {
     }
 
     private fun saveLaporanBabytoFirestore(onComplete: (Boolean) -> Unit) {
-        val firestore = FirestoreService.db
         val userId = FirestoreAuth.db.currentUser?.uid
         if (userId == null) {
             onComplete(false)
@@ -96,6 +98,7 @@ class ViewModelLaporanBayi : ViewModel() {
                 // Jika dokumen bayi sudah ada, perbarui data dengan set dan merge
                 babyDocRef.set(bayiData, SetOptions.merge())
                     .addOnSuccessListener {
+                        _bayi.value = bayiData
                         onComplete(true) // Sukses meng-update data bayi
                     }
                     .addOnFailureListener {
@@ -105,24 +108,19 @@ class ViewModelLaporanBayi : ViewModel() {
                 // Jika dokumen bayi belum ada, buat dokumen baru dengan set
                 babyDocRef.set(bayiData)
                     .addOnSuccessListener {
+                        // Setelah data berhasil disimpan, perbarui _bayi di ViewModel
+                        _bayi.value = bayiData
                         onComplete(true) // Sukses menambahkan data bayi baru
                     }
                     .addOnFailureListener {
                         onComplete(false) // Gagal menambahkan data bayi baru
                     }
             }
-        }.addOnFailureListener {
-            onComplete(false) // Gagal melakukan pemeriksaan dokumen bayi
-        }.addOnCompleteListener {
-            // Set status loading kembali menjadi false setelah operasi selesai
-            setLoadingState(false)
         }
     }
 
-    private fun loadLaporanBayiForCurrentUser() {
+    fun loadLaporanBayiForCurrentUser() {
         val userId = FirestoreAuth.db.currentUser?.uid // ID dari pengguna yang sedang login
-        val firestore = FirestoreService.db
-
         // Menggunakan userId untuk mengambil data spesifik pengguna
         firestore.collection("baby")
             .document(userId!!)
@@ -130,6 +128,22 @@ class ViewModelLaporanBayi : ViewModel() {
             .addOnSuccessListener { documentSnapshot ->
                 _bayi.value =
                     documentSnapshot.toObject(Bayi::class.java) // Convert Firestore document to PersonalData object
+            }
+            .addOnFailureListener {
+                it.printStackTrace()
+            }
+    }
+
+    fun loadLaporanBayiForUserId(userId: String) {
+        firestore.collection("baby")
+            .document(userId)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                val bayiData = documentSnapshot.toObject(Bayi::class.java)
+                _fullNameResponse.value = bayiData?.nama ?: ""
+                _dateOfBirth.value = bayiData?.tanggalLahir?.toDate()?.toInstant()?.atZone(ZoneId.systemDefault())?.toLocalDate() ?: LocalDate.now()
+                _weightBabyResponse.value = bayiData?.beratBadan ?: ""
+                _optionalData.value = bayiData?.catatanTambahan ?: ""
             }
             .addOnFailureListener {
                 it.printStackTrace()

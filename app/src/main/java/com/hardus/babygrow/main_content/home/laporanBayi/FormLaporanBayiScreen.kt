@@ -18,6 +18,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -40,10 +41,18 @@ import com.hardus.babygrow.util.components.OptionalTextArea
 @Composable
 fun FormLaporanBayiScreen(
     navController: NavController,
-    onHome: () -> Unit
+    onHome: () -> Unit,
+    viewModel:ViewModelLaporanBayi,
+    userId: String?
 ) {
-    val viewModel: ViewModelLaporanBayi = viewModel()
     val (focusName) = remember { FocusRequester.createRefs() }
+
+    // Inisialisasi data jika userId tidak null (operasi edit)
+    if (userId != null) {
+        LaunchedEffect(userId) {
+            viewModel.loadLaporanBayiForUserId(userId)
+        }
+    }
 
     Spacer(modifier = Modifier.padding(5.dp))
     Scaffold(

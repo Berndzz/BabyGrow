@@ -17,7 +17,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationDrawerItem
-import androidx.compose.material3.NavigationDrawerItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
@@ -33,17 +32,23 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.hardus.babygrow.R
 import com.hardus.babygrow.auth.presentation.sign_in.GoogleAuthUiClient
-import com.hardus.babygrow.main_content.home.HomeScreen
 import com.hardus.babygrow.main_content.home.detail.DetailScreen
 import com.hardus.babygrow.main_content.home.detail.ListVideoScreen
 import com.hardus.babygrow.main_content.home.laporanBayi.FormLaporanBayiScreen
+import com.hardus.babygrow.main_content.home.laporanBayi.ViewModelLaporanBayi
+import com.hardus.babygrow.main_content.home.presentation.HomeScreen
+import com.hardus.babygrow.main_content.home.presentation.HomeViewModel
 import com.hardus.babygrow.main_content.profile.ProfileScreen
+import com.hardus.babygrow.main_content.profile.TentangApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -57,6 +62,9 @@ fun AppScreen(
     googleAuthUiClient: GoogleAuthUiClient,
     drawerState: DrawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
 ) {
+    val homeViewModel: HomeViewModel = viewModel()
+    val viewModelLaporanBayi: ViewModelLaporanBayi = viewModel()
+
     ModalNavigationDrawer(drawerState = drawerState, drawerContent = {
         ModalDrawerSheet {
             DrawerContent(
@@ -81,7 +89,9 @@ fun AppScreen(
                     userData = googleAuthUiClient.getSignedInUser(),
                     onLaporanBayi = {
                         navController.navigate(route = Screens.LaporanBayi.route)
-                    }
+                    },
+                    viewModel = viewModelLaporanBayi,
+                    homeViewModel = homeViewModel
                 )
             }
             composable(Screens.Profile.route) {
@@ -95,6 +105,9 @@ fun AppScreen(
                             ).show()
                             navController.popBackStack()
                         }
+                    },
+                    onAboutApp = {
+                        navController.navigate(route = Screens.AboutApp.route)
                     }
                 )
             }
@@ -104,21 +117,50 @@ fun AppScreen(
                     onHome = {
                         navController.popBackStack()
                         navController.navigate(route = Screens.Home.route)
-                    }
+                    },
+                    viewModel = viewModelLaporanBayi,
+                    userId = null
+                )
+            }
+            composable(Screens.AboutApp.route) {
+                TentangApp(navController = navController)
+            }
+            composable(
+                route = "${Screens.LaporanBayi.route}/{userId}",
+                arguments = listOf(navArgument("userId") { type = NavType.StringType })
+            ) { navBackStackEntry ->
+                val userId = navBackStackEntry.arguments?.getString("userId")
+                FormLaporanBayiScreen(
+                    navController = navController,
+                    onHome = {
+                        navController.popBackStack()
+                        navController.navigate(route = Screens.Home.route)
+                    },
+                    viewModel = viewModelLaporanBayi,
+                    userId = userId // Menggunakan UID yang diterima dari argumen navigasi
                 )
             }
             composable("detail/{simulasiId}") { backStackEntry ->
                 val simulasiId = backStackEntry.arguments?.getString("simulasiId")?.toLongOrNull()
                 if (simulasiId != null) {
-                    DetailScreen(navController = navController, simulasiId = simulasiId)
+                    DetailScreen(
+                        navController = navController,
+                        simulasiId = simulasiId,
+                        viewModel = homeViewModel
+                    )
                 } else {
                     Text(text = "Error : ID Simulasi Tidak Valid")
                 }
             }
+
             composable("videoList/{simulasiId}") { backStackEntry ->
                 val simulasiId = backStackEntry.arguments?.getString("simulasiId")?.toLongOrNull()
                 if (simulasiId != null) {
-                    ListVideoScreen(navController = navController, simulasiId = simulasiId)
+                    ListVideoScreen(
+                        navController = navController,
+                        simulasiId = simulasiId,
+                        viewModel = homeViewModel
+                    )
                 } else {
                     Text(text = "Error : ID Simulasi Tidak Valid")
                 }
@@ -137,7 +179,6 @@ private fun DrawerContent(
     }
 
     val selectedColor = MaterialTheme.colorScheme.onBackground
-    val unselectedColor = MaterialTheme.colorScheme.onBackground
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -147,12 +188,6 @@ private fun DrawerContent(
                 .fillMaxWidth()
                 .height(200.dp), contentAlignment = Alignment.Center
         ) {
-//            Image(
-//                modifier = Modifier.size(150.dp),
-//                imageVector = Icons.Filled.AccountCircle,
-//                contentScale = ContentScale.Crop,
-//                contentDescription = null
-//            )
             Image(
 
                 painter = painterResource(id = R.drawable.babygrow),
@@ -186,10 +221,6 @@ private fun DrawerContent(
                     selectedItemIndex = index
                     onMenuClick(screen.route)
                 },
-                colors = NavigationDrawerItemDefaults.colors(
-                    //selectedContainerColor = selectedColor,
-                    //unselectedContainerColor = unselectedColor
-                )// Atur warna konten yang dipilih
             )
         }
     }

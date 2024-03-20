@@ -2,13 +2,10 @@ package com.hardus.babygrow.navigation.navgraph
 
 import android.content.Context
 import androidx.lifecycle.LifecycleOwner
-import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.hardus.babygrow.auth.presentation.sign_in.GoogleAuthUiClient
-import com.hardus.babygrow.main_content.home.HomeScreen
 import com.hardus.babygrow.navigation.APP_GRAPH_ROUTE
 import com.hardus.babygrow.navigation.AppScreen
 import com.hardus.babygrow.navigation.Screens

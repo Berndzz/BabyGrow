@@ -42,8 +42,7 @@ fun NavGraphBuilder.authNavGraph(
                 if (googleAuthUiClient.getSignedInUser() != null) {
                     navController.navigate(route = APP_GRAPH_ROUTE) {
                         popUpTo(AUTH_GRAPH_ROUTE) {
-                            inclusive =
-                                false // Set to true if you want to also clear the start destination of authNavGraph
+                            inclusive = false
                         }
                     }
                 }
@@ -62,6 +61,7 @@ fun NavGraphBuilder.authNavGraph(
                     }
                 }
             )
+
             LaunchedEffect(key1 = state.isSignInSuccessful) {
                 if (state.isSignInSuccessful) {
                     Toast.makeText(
@@ -74,6 +74,7 @@ fun NavGraphBuilder.authNavGraph(
                     viewModel.resetState()
                 }
             }
+
             SignInScreen(
                 state = state,
                 onSignInClick = {
@@ -88,7 +89,20 @@ fun NavGraphBuilder.authNavGraph(
                 },
                 isLoading = state.isLoading
             )
+        }
 
+        composable(route = "sign_out") { // Tambahkan tujuan baru untuk proses logout
+            LaunchedEffect(key1 = Unit) {
+                // Lakukan proses logout
+                googleAuthUiClient.signOut()
+                // Navigasi kembali ke layar sign-in setelah logout
+                navController.navigate(Screens.SignIn.route) {
+                    // Membersihkan back stack
+                    popUpTo(AUTH_GRAPH_ROUTE) {
+                        inclusive = true // Termasuk tujuan awal dalam grafik autentikasi
+                    }
+                }
+            }
         }
     }
 }
