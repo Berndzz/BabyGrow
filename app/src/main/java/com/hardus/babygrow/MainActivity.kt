@@ -20,8 +20,6 @@ import com.hardus.babygrow.util.data.Video
 
 class MainActivity : ComponentActivity() {
 
-
-
     private val googleAuthUiClient by lazy {
         GoogleAuthUiClient(
             context = applicationContext,

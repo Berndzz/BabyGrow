@@ -119,15 +119,7 @@ fun CardProfile(
                             }
                         }
                         Spacer(modifier = Modifier.height(20.dp))
-                        ClickableText(
-                            text = AnnotatedString("Detail Informasi"),
-                            onClick = { /* Aksi ketika teks diklik */ },
-                            style = TextStyle(
-                                color = Color.Blue,
-                                fontSize = 20.sp,// Warna biru
-                                textDecoration = TextDecoration.Underline // Menambahkan garis bawah
-                            ),
-                        )
+
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
